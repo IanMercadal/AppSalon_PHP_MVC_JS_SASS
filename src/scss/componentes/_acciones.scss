@@ -1,0 +1,17 @@
+@use '../base/_variables.scss' as v;
+@use '../base/_mixins.scss' as m;
+
+.acciones {
+    margin-top: v.$separacion;
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    a {
+        color: v.$blanco;
+        display: block;
+        margin-bottom: calc(v.$separacion / 2);
+        text-align: center;
+    }
+}
