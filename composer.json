@@ -1,0 +1,17 @@
+{
+    "name": "ian/app-salon_php_mvc_js_sass",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ian Mercadal",
+            "email": "imercadal@cifpfbmoll.eu"
+        }
+    ],
+    "require": {}
+}
