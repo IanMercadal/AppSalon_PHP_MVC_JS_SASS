@@ -18,5 +18,8 @@ class LoginController {
     public static function recuperar() {
         echo "Desde Recuperar";
     }
+    public static function crear() {
+        echo "Desde crear";
+    }
 }
 ?>
