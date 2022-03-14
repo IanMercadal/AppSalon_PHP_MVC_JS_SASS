@@ -50,6 +50,8 @@ class LoginController {
                     $email = new Email($usuario->nombre,$usuario->email,
                     $usuario->token);
 
+                    $email->enviarConfirmacion();
+
                     debuguear($email);
                     debuguear($usuario);
                 }
