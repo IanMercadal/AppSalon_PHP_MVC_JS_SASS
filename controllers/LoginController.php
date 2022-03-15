@@ -23,7 +23,23 @@ class LoginController {
 
                 if($usuario) {
                     // Verificar password
-                    $usuario->comprobarPasswordAndVerificado($auth->password);
+                    if($usuario->comprobarPasswordAndVerificado($auth->password) ){
+                        // Autenticar el usuario
+                        session_start();
+
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+
+                        // Redireccionamiento
+                        if($usuario->admin === "1") {
+                            $_SESSION['admin'] = $usuario->admin ?? null;
+                            header('Location: /admin');
+                        } else {
+                            header('Location: /cita');
+                        }
+                    };
                 } else {
                     Usuario::setAlerta('error','Usuario no encontrado');
                 }
@@ -44,8 +60,35 @@ class LoginController {
     }
 
     public static function olvide(Router $router) {
-        $router->render('auth/olvide-password', [
 
+        $alertas = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $auth = new Usuario($_POST);
+            $alertas = $auth->validarEmail();
+
+            if(empty($alertas)) {
+                $usuario = Usuario::where('email', $auth->email);
+
+                if($usuario && $usuario->confirmado === "1") {
+                    // Generar un token
+                    $usuario->crearToken();
+                    $usuario->guardar();
+
+                    // Enviar el email
+                    $email = new Email($usuario->email, $usuario->nombre,$usuario->token);
+                    $email->enviarInstrucciones();
+                    // Alerta de exito
+                    Usuario::setAlerta('exito','Revisa tu email');
+                } else {
+                    Usuario::setAlerta('error', 'El usuario no existe o no está confirmado');
+                }
+            }
+        }
+
+        $alertas = Usuario::getAlertas();
+        $router->render('auth/olvide-password', [
+            'alertas' => $alertas
         ]);
     }
     
