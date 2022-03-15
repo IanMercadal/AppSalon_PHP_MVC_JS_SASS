@@ -1,0 +1,15 @@
+@use '../base/_variables.scss' as v;
+@use '../base/_mixins.scss' as m;
+
+.paginacion {
+    padding: v.$separacion 0;
+
+    @include m.telefono {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        margin: 0 0 1rem 0;
+    }
+}

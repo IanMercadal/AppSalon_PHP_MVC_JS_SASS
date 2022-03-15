@@ -47,8 +47,21 @@
             </div>
         </form>
     </div>
+
     <div id="paso-3" class="seccion">
         <h2>Resumen</h2>
         <p class="text-center">Verifica que la info sea correcta</p>
+    </div>
+
+    <div class="paginacion">
+        <button
+            id="anterior"
+            class="boton"
+        >&laquo; Anterior</button>
+
+        <button
+            id="siguiente"
+            class="boton"
+        >Siguiente &raquo;</button>
     </div>
 </div>
