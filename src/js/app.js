@@ -179,7 +179,7 @@ function seleccionarFecha() {
 
         if( [6,0].includes(dia) ) {
             e.target.value = '';
-            mostrarAlerta('No sábados y no domingos', 'error');
+            mostrarAlerta('No sábados y no domingos', 'error', '.formulario');
         } else {
             cita.fecha = e.target.value;
         }
@@ -194,40 +194,42 @@ function seleccionHora() {
         const hora = horaCita.split(":")[0];
         if(hora < 10 || hora > 18) {
             e.target.value = '';
-            mostrarAlerta('Hora No Válida' , 'error');
+            mostrarAlerta('Hora No Válida' , 'error','.formulario');
         } else {
             cita.hora = e.target.value;
         }
     })
 }
 
-function mostrarAlerta(mensaje, tipo) {
+function mostrarAlerta(mensaje, tipo, elemento, desaparece = true) {
 
     // Previene que se generen más de 1 alerta
     const alertaPrevia = document.querySelector('.alerta');
-    if (alertaPrevia) return;
+    if (alertaPrevia) {
+        alertaPrevia.remove();
+    };
 
     const alerta = document.createElement('DIV');
     alerta.textContent = mensaje;
     alerta.classList.add('alerta');
     alerta.classList.add(tipo)
 
-    const formulario = document.querySelector('#paso-2 p');
-    formulario.appendChild(alerta);
+    const referencia = document.querySelector(elemento);
+    referencia.appendChild(alerta);
 
-    // Eliminar alerta
-    setTimeout(() => {
-        alerta.remove();
-    }, 3000);
+    if(desaparece) {
+        // Eliminar alerta
+        setTimeout(() => {
+            alerta.remove();
+        }, 3000);
+    }   
 }
 
 function mostrarResumen() {
     const resumen = document.querySelector('.contenido-resumen');
 
-    console.log(cita.servicios.length);
-
-    if(Object.values(cita).includes('')) {
-        console.log('Hace falta datos')
+    if(Object.values(cita).includes('') || cita.servicios.length === 0 ) {
+        mostrarAlerta('Faltan datos o servicios, fecha u hora', 'error', '.contenido-resumen', false);
     } else {
         console.log('Todo bien')
     }
