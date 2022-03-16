@@ -173,9 +173,29 @@ function seleccionarFecha() {
 
         if( [6,0].includes(dia) ) {
             e.target.value = '';
-            console.log('Sábados y Domingo no abrimos')
+            mostrarAlerta('No sábados y no domingos', 'error');
         } else {
             cita.fecha = e.target.value;
         }
     })
+}
+
+function mostrarAlerta(mensaje, tipo) {
+
+    // Previene que se generen más de 1 alerta
+    const alertaPrevia = document.querySelector('.alerta');
+    if (alertaPrevia) return;
+
+    const alerta = document.createElement('DIV');
+    alerta.textContent = mensaje;
+    alerta.classList.add('alerta');
+    alerta.classList.add(tipo)
+
+    const formulario = document.querySelector('#paso-2 p');
+    formulario.appendChild(alerta);
+
+    // Eliminar alerta
+    setTimeout(() => {
+        alerta.remove();
+    }, 3000);
 }
