@@ -3,6 +3,7 @@ const pasoInicial = 1;
 const pasoFinal = 3;
 
 const cita = {
+    id: '',
     nombre: '',
     fecha: '',
     hora: '',
@@ -22,6 +23,7 @@ function iniciarApp() {
 
     consultarAPI(); // Consulta la API en el back de PHP
 
+    idCliente(); //
     nombreCliente(); // Añade el nombre del cliente al objeto cita
     seleccionarFecha(); // Añade la fecha de la cita al objeto
     seleccionHora(); // Añade la hora de la cita al objeto
@@ -166,6 +168,9 @@ function seleccionarServicio(servicio) {
         divServicio.classList.add('seleccionado')
     }
 }
+function idCliente() {
+    cita.id = document.querySelector('#id').value;
+}
 
 function nombreCliente() {
     cita.nombre = document.querySelector('#nombre').value;
@@ -304,14 +309,15 @@ function mostrarResumen() {
 
 async function reservarCita() {
     
-    const {nombre, fecha, hora, servicios} = cita;
+    const {fecha, hora, servicios, id} = cita;
 
     const idServicios = servicios.map(servicio => servicio.id);
 
     const datos = new FormData();
-    datos.append('nombre', nombre);
+
     datos.append('fecha', fecha);
     datos.append('hora', hora);
+    datos.append('usuarioId', id);
     datos.append('servicios', idServicios);
 
     // Petición hacia la api
@@ -322,9 +328,7 @@ async function reservarCita() {
         body: datos
     });
 
-    console.log("Hola");
     const resultado = await respuesta.json();
-    console.log("Adios")
 
     // console.log([...datos]); -> Esto nos permite ver lo que hay en el formdata
 }
