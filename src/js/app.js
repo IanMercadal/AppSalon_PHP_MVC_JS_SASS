@@ -303,6 +303,20 @@ function mostrarResumen() {
     resumen.appendChild(botonReservar);
 }
 
-function reservarCita() {
-    console.log('reservando una cita')
+async function reservarCita() {
+    
+    const datos = new FormData();
+    datos.append('nombre','Juan');
+
+    // Petición hacia la api
+    const url = 'http://localhost:3000/api/citas';
+
+    const respuesta = await fetch(url, {
+        method: 'POST'
+    });
+
+    const resultado = await respuesta.json();
+    console.log(resultado)
+
+    // console.log([...datos]); -> Esto nos permite ver lo que hay en el formdata
 }
