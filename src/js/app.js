@@ -322,8 +322,9 @@ async function reservarCita() {
         body: datos
     });
 
+    console.log("Hola");
     const resultado = await respuesta.json();
-    console.log(resultado)
+    console.log("Adios")
 
     // console.log([...datos]); -> Esto nos permite ver lo que hay en el formdata
 }
